@@ -1,7 +1,7 @@
-package config
+package codegen
 
 import chisel.lib.dclib.{DCMirror, DCOutput}
-import com.quarch.configgen.RecordDef
+import org.ghutchis.codegen.RecordDef
 import chisel3._
 import chisel3.util._
 import chisel3.util.experimental.forceName

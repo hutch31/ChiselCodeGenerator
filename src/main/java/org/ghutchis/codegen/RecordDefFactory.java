@@ -1,4 +1,4 @@
-package com.quarch.configgen;
+package org.ghutchis.codegen;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

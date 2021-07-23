@@ -1,6 +1,6 @@
-package com.quarch.configgen;
+package org.ghutchis.codegen;
 
-import config.RecordMultiplexer;
+import codegen.RecordMultiplexer;
 import org.junit.Test;
 
 public class TestChiselBackend {

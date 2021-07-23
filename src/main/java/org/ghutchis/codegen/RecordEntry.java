@@ -1,4 +1,4 @@
-package com.quarch.configgen;
+package org.ghutchis.codegen;
 
 import javax.xml.bind.annotation.XmlElement;
 
