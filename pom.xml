@@ -129,19 +129,21 @@
           <artifactId>scala-maven-plugin</artifactId>
           <version>3.3.2</version>
           <executions>
-            <execution>
-              <goals>
-                <goal>compile</goal>
-                <goal>testCompile</goal>
-              </goals>
-              <configuration>
-                <args>
-                  <arg>-Xsource:2.11</arg>
-                  <arg>-dependencyfile</arg>
-                  <arg>${project.build.directory}/.scala_dependencies</arg>
-                </args>
-              </configuration>
-            </execution>
+              <execution>
+                  <id>scala-compile-first</id>
+                  <phase>process-resources</phase>
+                  <goals>
+                      <goal>compile</goal>
+                      <goal>testCompile</goal>
+                  </goals>
+                  <configuration>
+                      <args>
+                          <arg>-Xsource:2.11</arg>
+                          <arg>-dependencyfile</arg>
+                          <arg>${project.build.directory}/.scala_dependencies</arg>
+                      </args>
+                  </configuration>
+              </execution>
           </executions>
         </plugin>
         <plugin>
