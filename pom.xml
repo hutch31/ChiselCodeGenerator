@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.quarch</groupId>
+    <artifactId>ChiselCodeGenerator</artifactId>
+    <version>0.1</version>
+    <dependencies>
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+		<!-- https://mvnrepository.com/artifact/net.sourceforge.argparse4j/argparse4j -->
+		<dependency>
+		    <groupId>net.sourceforge.argparse4j</groupId>
+		    <artifactId>argparse4j</artifactId>
+		    <version>0.9.0</version>
+		</dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Chisel3 Dependencies -->
+        <dependency>
+          <groupId>org.scala-lang</groupId>
+          <artifactId>scala-library</artifactId>
+          <version>${scala.version}</version>
+        </dependency>
+
+        <dependency>
+          <groupId>edu.berkeley.cs</groupId>
+          <artifactId>chisel3_2.12</artifactId>
+          <version>3.4.2</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.berkeley.cs</groupId>
+          <artifactId>chiseltest_2.12</artifactId>
+          <version>0.3.2</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.scalatest</groupId>
+          <artifactId>scalatest_${scala.compat.version}</artifactId>
+          <version>3.0.5</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.specs2</groupId>
+          <artifactId>specs2-core_${scala.compat.version}</artifactId>
+          <version>${spec2.version}</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.specs2</groupId>
+          <artifactId>specs2-junit_${scala.compat.version}</artifactId>
+          <version>${spec2.version}</version>
+          <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <kotlin.version>1.5.0</kotlin.version>
+        <scala.version>2.12.10</scala.version>
+        <scala.compat.version>2.12</scala.compat.version>
+        <spec2.version>4.2.0</spec2.version>
+    </properties>
+
+    <build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>2.4</version>
+            <configuration>
+                <descriptorRefs>
+                    <descriptorRef>jar-with-dependencies</descriptorRef>
+                </descriptorRefs>
+                <archive>
+                    <manifest>
+                        <mainClass>com.quarch.configgen.GeneratorMain</mainClass>
+                    </manifest>
+                </archive>
+            </configuration>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>single</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <executions>
+                <execution>
+                    <id>compile</id>
+                    <phase>compile</phase>
+                    <goals>
+                        <goal>compile</goal>
+                    </goals>
+                </execution>
+                <execution>
+                    <id>testCompile</id>
+                    <phase>test-compile</phase>
+                    <goals>
+                        <goal>testCompile</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+
+        <!-- Chisel3 Plugins -->
+        <plugin>
+          <!-- see http://davidb.github.com/scala-maven-plugin -->
+          <groupId>net.alchim31.maven</groupId>
+          <artifactId>scala-maven-plugin</artifactId>
+          <version>3.3.2</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>compile</goal>
+                <goal>testCompile</goal>
+              </goals>
+              <configuration>
+                <args>
+                  <arg>-Xsource:2.11</arg>
+                  <arg>-dependencyfile</arg>
+                  <arg>${project.build.directory}/.scala_dependencies</arg>
+                </args>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.scalatest</groupId>
+          <artifactId>scalatest-maven-plugin</artifactId>
+          <version>2.0.0</version>
+          <configuration>
+            <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+            <junitxml>.</junitxml>
+            <filereports>TestSuiteReport.txt</filereports>
+            <!-- Comma separated list of JUnit test class names to execute -->
+            <jUnitClasses></jUnitClasses>
+          </configuration>
+          <executions>
+            <execution>
+              <id>test</id>
+              <goals>
+                <goal>test</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+    </plugins>
+    </build>
+</project>
