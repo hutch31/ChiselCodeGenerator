@@ -1,0 +1,16 @@
+<RecordDef>
+    <Name>TestRecord</Name>
+    <Outputs>4</Outputs>
+    <Entry>
+        <Name>alpha</Name>
+        <Width>4</Width>
+    </Entry>
+    <Entry>
+        <Name>bravo</Name>
+        <Width>8</Width>
+    </Entry>
+    <Entry>
+        <Name>charlie</Name>
+        <Width>3</Width>
+    </Entry>
+</RecordDef>
