@@ -7,16 +7,16 @@ import chisel3.util._
 import chisel3.util.experimental.forceName
 
 import scala.collection.immutable.{LinearSeq, ListMap}
-import scala.collection.mutable
+import scala.collection.mutable.MutableList
 
 class UserRecord(r : RecordDef) extends Record {
-  var portSeq = new mutable.ArraySeq[(String, Data)](0)
+  var portSeq = new MutableList[(String, UInt)]()
 
   for (rNum <- 0 until r.entryList.size()) {
     portSeq = portSeq :+ (r.entryList.get(rNum).Name, UInt(r.entryList.get(rNum).Width.intValue().W))
   }
 
-  val elements = ListMap(portSeq: _*)
+  val elements = scala.collection.immutable.ListMap(portSeq: _*)
 
   def apply(elt: String): Data = elements(elt)
   override def cloneType: this.type = (new UserRecord(r)).asInstanceOf[this.type]
